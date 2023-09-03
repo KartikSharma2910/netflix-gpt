@@ -1,0 +1,94 @@
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/855ed6e2-d9f1-4afd-90da-96023ec747c3/85eb5b91-25ed-4965-ace9-ba8e4a0ead8d/IN-en-20230828-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+}
+
+.imageWrapper {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0, transparent);
+}
+
+.image {
+  width: 200px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.formWrapper {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  color: white;
+  margin: auto;
+  width: 430px;
+  height: 600px;
+  padding: 60px 58px 40px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.formLabel {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.input {
+  background-color: #333;
+  border-radius: 4px;
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+  padding: 16px 20px 16px 20px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.button {
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  background: #e50914;
+  height: 50px;
+  margin-top: 16px;
+}
+
+.helpWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkbox {
+  background-color: #b3b3b3;
+}
+
+.help:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signUpWrap {
+  font-size: 16px;
+  color: #b3b3b3;
+  margin-top: 3em;
+}
+
+.signUp {
+  color: white;
+}
+
+.signUp:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
