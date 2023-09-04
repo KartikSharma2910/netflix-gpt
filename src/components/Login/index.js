@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import { checkValidData } from "../../utils/validate";
 import "./styles.css";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
 
+  const email = useRef(null);
+  const password = useRef(null);
+
   const toggleForm = () => setIsSignInForm(!isSignInForm);
+
+  const handleButtonClick = () => {
+    // Validate the form data
+    const message = checkValidData(email.current.value, password.current.value);
+    message === null ? toast.success("Welcome User") : toast.error(message);
+  };
+
   return (
     <div className="wrapper">
       <div className="imageWrapper">
@@ -20,12 +32,18 @@ const Login = () => {
           <input type="text" placeholder="Name" className="input" />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email or phone number"
           className="input"
         />
-        <input type="password" placeholder="Password" className="input" />
-        <button className="button">
+        <input
+          ref={password}
+          type="password"
+          placeholder="Password"
+          className="input"
+        />
+        <button className="button" onClick={() => handleButtonClick()}>
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <div className="helpWrapper">
