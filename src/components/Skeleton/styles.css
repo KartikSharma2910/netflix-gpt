@@ -1,0 +1,38 @@
+.skeleton-container {
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-content {
+  animation: pulsate 1.5s infinite;
+}
+
+.skeleton-header {
+  height: 50px;
+  width: 100%;
+  background: linear-gradient(90deg, #333 25%, #e0e0e0 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 200%;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

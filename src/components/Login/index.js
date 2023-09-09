@@ -1,20 +1,67 @@
-import React, { useRef, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../utils/firebase";
 import { checkValidData } from "../../utils/validate";
+import Skeleton from "../Skeleton";
 import "./styles.css";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const email = useRef(null);
-  const password = useRef(null);
+  const navigate = useNavigate();
 
   const toggleForm = () => setIsSignInForm(!isSignInForm);
 
   const handleButtonClick = () => {
+    setLoading(true);
     // Validate the form data
-    const message = checkValidData(email.current.value, password.current.value);
-    message === null ? toast.success("Welcome User") : toast.error(message);
+    const message = checkValidData(email, password);
+    if (message) {
+      toast.error(message);
+      setLoading(false); // Set loading to false when validation fails
+      return;
+    }
+
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // const user = userCredential.user;
+          toast.success("Welcome " + name);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          toast.error(errorCode + "-" + errorMessage);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // const user = userCredential.user;
+          toast.success("Welcome " + name);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          toast.error(errorCode + "-" + errorMessage);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   return (
@@ -28,21 +75,40 @@ const Login = () => {
       </div>
       <div className="formWrapper">
         <div className="formLabel">{isSignInForm ? "Sign In" : "Sign Up"}</div>
-        {!isSignInForm && (
-          <input type="text" placeholder="Name" className="input" />
+        {isSignInForm ? null : loading ? (
+          <Skeleton />
+        ) : (
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            className="input"
+          />
         )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email or phone number"
-          className="input"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="input"
-        />
+
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <input
+            value={email}
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email or phone number"
+            className="input"
+          />
+        )}
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <input
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="input"
+          />
+        )}
         <button className="button" onClick={() => handleButtonClick()}>
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
